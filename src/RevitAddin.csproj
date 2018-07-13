@@ -79,4 +79,20 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="CopyAddinsToAppData" AfterTargets="AfterBuild">
+    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
+    <ItemGroup>
+      <AddinFiles Include="..\bin\$(Configuration)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+  </Target>
+  
+  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
+    <!-- Delete previously deployed to AppData folder add-in files -->
+    <ItemGroup>
+      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
+    </ItemGroup>
+    <Delete Files="@(AddinFiles)" />
+  </Target>
+
 </Project>
