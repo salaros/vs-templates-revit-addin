@@ -67,6 +67,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="RevitAddin.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

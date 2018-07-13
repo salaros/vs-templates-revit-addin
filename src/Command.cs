@@ -1,19 +1,18 @@
 #region Namespaces
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
+using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 
 #endregion
 
 namespace RevitAddin
 {
-    [Transaction(TransactionMode.Manual)]
+    [Transaction(TransactionMode.Manual)] 
+    [Regeneration(RegenerationOption.Manual)] 
     public class Command : IExternalCommand
     {
         public Result Execute(
@@ -21,35 +20,50 @@ namespace RevitAddin
             ref string message,
             ElementSet elements)
         {
-            var uiapp = commandData.Application;
-            var uidoc = uiapp.ActiveUIDocument;
-            var app = uiapp.Application;
-            var doc = uidoc.Document;
+            var uiapp = commandData?.Application;
+            var uidoc = uiapp?.ActiveUIDocument;
+            var app = uiapp?.Application;
+            var doc = uidoc?.Document;
 
-            // Access current selection
+            if (null == app || null == doc)
+            {
+                MessageBox.Show($"{this} command can be called when a document is opened and ready!");
+                return Result.Cancelled;
+            }
+
+            // Example 1: pick one object from Revit.
             var selection = uidoc.Selection;
+            var hasPickOne = selection?.PickObject(ObjectType.Element);
+            if (hasPickOne != null)
+            {
+                var el = doc.GetElement(hasPickOne.ElementId);
+                Debug.Print(el.Name);
+            }
 
-            // Retrieve elements from database
-            var col
+            // Example 2: retrieve elements from database
+            var walls
                 = new FilteredElementCollector(doc)
                     .WhereElementIsNotElementType()
                     .OfCategory(BuiltInCategory.INVALID)
                     .OfClass(typeof(Wall));
-
-            // Filtered element collector is iterable
-            foreach (var el in col)
+            if (null != walls)
             {
-                Debug.Print(el.Name);
+                foreach (var wall in walls)
+                {
+                    Debug.Print(wall.Name);
+                }
             }
 
-            // Modify document within a transaction
-            using (var transaction = new Transaction(doc))
+            // Example 3: Modify document within a transaction
+            using (var transaction = new Transaction(doc, "Transaction name goes here, change it"))
             {
-                transaction.Start("Transaction Name");
+                if (TransactionStatus.Started != transaction.Start())
+                    return Result.Failed; // TODO do something if transaction didn't start
+
                 using (var subTransaction = new SubTransaction(doc))
                 {
                     subTransaction.Start();
-                    // Do something here
+                    // TODO: add you code here
                     subTransaction.Commit();
                 }
                 transaction.Commit();
