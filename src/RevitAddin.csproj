@@ -71,5 +71,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+  <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <!-- A temporary fix for Revit SDK files being copied to the output folder -->
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit2014x64-SDK' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApi.x64' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApiUI.x64'" />
+    </ItemGroup>
+  </Target>
 
 </Project>
