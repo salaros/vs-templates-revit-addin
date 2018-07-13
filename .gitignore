@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Not sure why, but ASoft .NET Version Detector's reports
+# keep bloating the project, so the rule below get's rid of them 
+--version*
