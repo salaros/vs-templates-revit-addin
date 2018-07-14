@@ -13,13 +13,13 @@ namespace RevitAddin
 {
     [Transaction(TransactionMode.Manual)] 
     [Regeneration(RegenerationOption.Manual)] 
-    public class Command : IExternalCommand
+    public class ExternalCommand : IExternalCommand
     {
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
-            ElementSet elements)
-        {
+            ElementSet elements
+        ){
             var uiapp = commandData?.Application;
             var uidoc = uiapp?.ActiveUIDocument;
             var app = uiapp?.Application;
@@ -27,7 +27,8 @@ namespace RevitAddin
 
             if (null == app || null == doc)
             {
-                MessageBox.Show($"{this} command can be called when a document is opened and ready!");
+                // TODO it's just an example, an external command can open a document if needed
+                MessageBox.Show("This command can be called only when a document is opened and ready!");
                 return Result.Cancelled;
             }
 

@@ -4,7 +4,7 @@
     <Text>Command Revit add-in</Text>
     <Description>The description for your Revit add-in goes here</Description>
     <Assembly>RevitAddin.dll</Assembly>
-    <FullClassName>RevitAddin.Command</FullClassName>
+    <FullClassName>RevitAddin.ExternalCommand</FullClassName>
     <ClientId>00000000-0000-0000-0000-000000000001</ClientId>
     <VendorId>org.example</VendorId>
     <VendorDescription>Acme Ltd: http://example.org</VendorDescription>
