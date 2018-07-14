@@ -37,8 +37,7 @@ namespace RevitAddin
             var hasPickOne = selection?.PickObject(ObjectType.Element);
             if (hasPickOne != null)
             {
-                var el = doc.GetElement(hasPickOne.ElementId);
-                Debug.Print(el.Name);
+                Debug.Print(doc.GetElement(hasPickOne.ElementId).Name);
             }
 
             // Example 2: retrieve elements from database

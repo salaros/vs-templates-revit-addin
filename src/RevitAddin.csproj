@@ -47,6 +47,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Revit2014x64-SDK" Version="1.1.0" Condition=" '$(RevitVersion)' == '2014' " />
     <PackageReference Include="Revit.RevitApi.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
     <PackageReference Include="Revit.RevitApiUI.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
@@ -67,7 +73,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
+    <None Remove="Resources\testCommand.png" />
+    <None Remove="RevitAddin.csproj.DotSettings" />
+    <EmbeddedResource Include="Resources\testCommand.png" />
   </ItemGroup>
 
   <ItemGroup>

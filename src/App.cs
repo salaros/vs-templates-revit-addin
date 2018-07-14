@@ -28,6 +28,8 @@ namespace RevitAddin
         {
             uiControlledApplication = uiCtrlApp;
 
+            RibbonHelper.AddButtons(uiCtrlApp);
+
             try
             {
                 // Idling and initialization
@@ -124,14 +126,14 @@ namespace RevitAddin
         /// <param name="args">The <see cref="DocumentOpenedEventArgs" /> instance containing the event data.</param>
         private void OnDocumentOpened(object sender, DocumentOpenedEventArgs args)
         {
+            // TODO: this is just an example, remove or change code below
             var doc = args.Document;
             Debug.Assert(null != doc, $"Expected a valid Revit {nameof(Document)} instance");
 
+            // TODO: this is just an example, remove or change code below
             var app = args.Document?.Application;
             var uiapp = new UIApplication(app);
             Debug.Assert(null != uiapp, $"Expected a valid Revit {nameof(UIApplication)} instance");
-
-            // TODO: add you code here
         }
         
         /// <summary>
