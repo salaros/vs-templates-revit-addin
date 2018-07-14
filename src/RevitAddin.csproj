@@ -34,6 +34,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    
     <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
     e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
     <DefineConstants>REVIT$(RevitVersion)</DefineConstants>
@@ -74,30 +77,37 @@
   </Target>
 
   <ItemGroup>
-    <!-- Not sure why, but ASoft .NET Version Detector's reports
-    keep bloating the project, so the rule below get's rid of them  -->
-    <None Remove="--version*" />
-    
-    <!-- Remove all *.DotSettings files from the project -->
-    <None Remove="*.DotSettings" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!-- Add-in manifest is processed via MSBuild -->
-    <None Update="AddinManifest.addin">
+    <Content Include="AddinManifest.addin">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
+    </Content>
     
     <!-- Don't use standard resource generator, since it doesn't allow
          one to use strings containing spaces -->
-    <EmbeddedResource Update="Properties\Resources*.resx">
-      <Generator />
+    <EmbeddedResource Include="Properties\Resources.resx">
+        <Generator />
     </EmbeddedResource>
+    
+    <EmbeddedResource Include="Properties\Resources.ru-RU.resx">
+        <Generator />
+    </EmbeddedResource>    
+
+    <EmbeddedResource Include="Resources\testCommand.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    
+    <Content Include="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <None Remove="Resources\testCommand.png" />
-    <EmbeddedResource Include="Resources\testCommand.png" />
+    <Compile Include="Ribbon\RibbonItems.cs" />
+    <Compile Include="Ribbon\RibbonManager.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="ExternalCommand.cs" />
+    <Compile Include="RibbonCommand.cs" />
+    <Compile Include="StringLocalizer.cs" />
   </ItemGroup>
   
   <PropertyGroup>
