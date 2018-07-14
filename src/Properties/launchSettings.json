@@ -2,27 +2,33 @@
   "profiles": {
     "Revit 2019": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2019\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2019\\Revit.exe",
+      "commandLineArgs": ""
     },
     "Revit 2018": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2018\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2018\\Revit.exe",
+      "commandLineArgs": ""
     },
     "Revit 2017": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2017\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2017\\Revit.exe",
+      "commandLineArgs": ""
     },
     "Revit 2016": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2016\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2016\\Revit.exe",
+      "commandLineArgs": ""
     },
     "Revit 2015": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2015\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2015\\Revit.exe",
+      "commandLineArgs": ""
     },
     "Revit 2014": {
       "commandName": "Executable",
-      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2014\\Revit.exe"
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2014\\Revit.exe",
+      "commandLineArgs": ""
     }
   }
 }
