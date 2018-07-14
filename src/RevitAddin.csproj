@@ -83,14 +83,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\testCommand.png" />
-    <EmbeddedResource Include="Resources\testCommand.png" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <!-- Add-in manifest is processed via MSBuild -->
     <None Update="AddinManifest.addin">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    
+    <!-- Don't use standard resource generator, since it doesn't allow
+         one to use strings containing spaces -->
+    <EmbeddedResource Update="Properties\Resources*.resx">
+      <Generator />
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="Resources\testCommand.png" />
+    <EmbeddedResource Include="Resources\testCommand.png" />
   </ItemGroup>
   
   <PropertyGroup>

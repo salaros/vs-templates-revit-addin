@@ -20,7 +20,7 @@ namespace RevitAddin
             ref string message,
             ElementSet elements
         ){
-            TaskDialog.Show("It's alive!", $"You've just called {nameof(RibbonCommand)}");
+            TaskDialog.Show("It's alive!", StringLocalizer.CallingAssembly["Localization: test string with spaces"]);
             return Result.Succeeded;
         }
     }
