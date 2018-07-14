@@ -101,6 +101,9 @@
   </ItemGroup>
   
   <PropertyGroup>
+    <RootNamespace>RevitAddin</RootNamespace>
+	  <AssemblyName>RevitAddin</AssemblyName>
+    
     <Authors>Your name</Authors>
     <PackageId>sample.vendor.id.change.it</PackageId>
     <Company>Acme Ltd</Company>
@@ -109,12 +112,13 @@
     <Version>0.0.1</Version>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
-  
+
   <Target Name="CreateAddinManifest" AfterTargets="AfterBuild">
     <ItemGroup>
       <AddinManifest Include="$(OutputPath)\$(AssemblyName).addin" />
     </ItemGroup>
     <ReplaceFileText InputFilename="AddinManifest.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="FullClassName&gt;((.*?)\.)+" ReplacementText="FullClassName&gt;$(RootNamespace)." />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;Name&gt;(.*?)&lt;" ReplacementText="&lt;Name&gt;$(Product)&lt;" />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
