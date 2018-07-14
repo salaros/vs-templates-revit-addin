@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <TargetFrameworks>net40;net45;net451;net452;net46;net47</TargetFrameworks>
     <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>full</DebugType>
   </PropertyGroup>
-    
+
   <PropertyGroup>
     <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
     e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
@@ -45,7 +45,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\$(Configuration)\$(RevitVersion)</OutputPath>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -66,24 +66,6 @@
     <PackageReference Include="Revit.RevitApiUI.x64" Version="2019.0.0" Condition=" '$(RevitVersion)' == '2019' " />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Not sure why, but ASoft .NET Version Detector's reports
-    keep bloating the project, so the rule below get's rid of them  -->
-    <None Remove="--version*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Resources\testCommand.png" />
-    <None Remove="RevitAddin.csproj.DotSettings" />
-    <EmbeddedResource Include="Resources\testCommand.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="RevitAddin.addin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
     <ItemGroup>
       <!-- A temporary fix for Revit SDK files being copied to the output folder -->
@@ -91,6 +73,46 @@
     </ItemGroup>
   </Target>
 
+  <ItemGroup>
+    <!-- Not sure why, but ASoft .NET Version Detector's reports
+    keep bloating the project, so the rule below get's rid of them  -->
+    <None Remove="--version*" />
+    
+    <!-- Remove all *.DotSettings files from the project -->
+    <None Remove="*.DotSettings" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\testCommand.png" />
+    <EmbeddedResource Include="Resources\testCommand.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AddinManifest.addin">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <Authors>Your name</Authors>
+    <PackageId>sample.vendor.id.change.it</PackageId>
+    <Company>Acme Ltd</Company>
+    <PackageProjectUrl>http://example.com</PackageProjectUrl>
+    <Product>The description for your application goes here</Product>
+    <Version>0.0.1</Version>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+  
+  <Target Name="CreateAddinManifest" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <AddinManifest Include="$(OutputPath)\$(AssemblyName).addin" />
+    </ItemGroup>
+    <ReplaceFileText InputFilename="AddinManifest.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;Name&gt;(.*?)&lt;" ReplacementText="&lt;Name&gt;$(Product)&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
+  </Target>
+  
   <Target Name="CopyAddinsToAppData" AfterTargets="AfterBuild">
     <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
     <ItemGroup>
@@ -107,4 +129,24 @@
     <Delete Files="@(AddinFiles)" />
   </Target>
 
+  <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+              File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
 </Project>
