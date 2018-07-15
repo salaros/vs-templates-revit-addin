@@ -263,3 +263,6 @@ __pycache__/
 # Not sure why, but ASoft .NET Version Detector's reports
 # keep bloating the project, so the rule below get's rid of them 
 --version*
+
+# Exclude dist folder
+dist/
