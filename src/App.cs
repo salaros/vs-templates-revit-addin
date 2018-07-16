@@ -8,6 +8,12 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
+#if REVIT2017
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+#endif
+
 #endregion
 
 namespace RevitAddin
@@ -16,6 +22,7 @@ namespace RevitAddin
     [Regeneration(RegenerationOption.Manual)]
     public class App : IExternalApplication
     {
+
         protected UIControlledApplication uiControlledApplication;
 
         /// <summary>
@@ -27,6 +34,15 @@ namespace RevitAddin
         public Result OnStartup(UIControlledApplication uiCtrlApp)
         {
             uiControlledApplication = uiCtrlApp;
+
+#if REVIT2017
+            // A workaround for a bug with UI culture in Revit 2017.1.1
+            // More info here: https://forums.autodesk.com/t5/revit-api-forum/why-the-language-key-switches-currentculture-instead-of/m-p/6843557/highlight/true#M20779
+            var language = uiCtrlApp.ControlledApplication.Language.ToString();
+            Thread.CurrentThread.CurrentUICulture = CultureInfo
+                                                        .GetCultures(CultureTypes.SpecificCultures)
+                                                        .FirstOrDefault(c => language.Contains(c.EnglishName)) ?? Thread.CurrentThread.CurrentUICulture;
+#endif
 
             RibbonHelper.AddButtons(uiCtrlApp);
 
