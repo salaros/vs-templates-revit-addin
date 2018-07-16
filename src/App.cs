@@ -2,6 +2,10 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
@@ -17,6 +21,38 @@ namespace RevitAddin
     public class App : IExternalApplication
     {
         protected UIControlledApplication uiControlledApplication;
+
+        static App()
+        {
+            AppDomain.CurrentDomain.ResourceResolve += (sender, args) =>
+            {
+                var rootNameSpace = Assembly.GetExecutingAssembly().ManifestModule.GetTypes().Min(t => t.Namespace);
+                try
+                {
+                    if (args.Name.StartsWith(rootNameSpace, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(args.Name))
+                        {
+                            if (stream == null)
+                            {
+                                //throw new Exception("Could not find resource: " + resourceName);
+                                return null;
+                            }
+
+                            var assemblyData = new Byte[stream.Length];
+                            stream.Read(assemblyData, 0, assemblyData.Length);
+                            var ass = Assembly.Load(assemblyData);
+                            return ass;
+                        }
+                    }
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            };
+        }
 
         /// <summary>
         /// Called when [startup].

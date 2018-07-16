@@ -56,6 +56,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.15.5" />
     <PackageReference Include="Revit2014x64-SDK" Version="1.1.0" Condition=" '$(RevitVersion)' == '2014' " />
     <PackageReference Include="Revit.RevitApi.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
     <PackageReference Include="Revit.RevitApiUI.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
@@ -70,6 +71,9 @@
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <RevitApiLocations Include="@(ReferenceCopyLocalPaths->'%(RootDir)%(Directory)')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit2014x64-SDK' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApi.x64' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApiUI.x64'" />
+    </ItemGroup>
     <ItemGroup>
       <!-- A temporary fix for Revit SDK files being copied to the output folder -->
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit2014x64-SDK' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApi.x64' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApiUI.x64'" />
@@ -134,22 +138,6 @@
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
   </Target>
   
-  <Target Name="CopyAddinsToAppData" AfterTargets="AfterBuild">
-    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
-    <ItemGroup>
-      <AddinFiles Include="..\bin\$(Configuration)\**\*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
-  </Target>
-  
-  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
-    <!-- Delete previously deployed to AppData folder add-in files -->
-    <ItemGroup>
-      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
-    </ItemGroup>
-    <Delete Files="@(AddinFiles)" />
-  </Target>
-
   <UsingTask TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <InputFilename ParameterType="System.String" Required="true" />
@@ -169,5 +157,36 @@
       </Code>
     </Task>
   </UsingTask>
+  
+  <Target Name="MergeDlls" AfterTargets="CreateAddinManifest"> <!-- Condition=" '$(Configuration)' == 'Release' "> -->
+    <ItemGroup>
+      <RevitApiLocations Include="$(OutputPath)" />
+      <InputAssemblies Include="$(OutputPath)\**\*.dll" />
+    </ItemGroup>
+    <ILRepack Parallel="false" Verbose="true" AllowDuplicateResources="false" Internalize="true" InputAssemblies="@(InputAssemblies)" TargetKind="SameAsPrimaryAssembly" LibraryPath="@(RevitApiLocations)" ZeroPeKind="true" OutputFile="$(OutputPath)\$(AssemblyName).dll" />
+    
+    <ItemGroup>
+      <Dependencies Include="$(OutputPath)\**\*.dll" Exclude="$(OutputPath)\$(AssemblyName).dll" />
+    </ItemGroup>
+    <Delete Files="@(Dependencies)" />
+    <RemoveDir Directories="@(Dependencies->'%(RootDir)%(Directory)')" />
+  </Target>
+  
+  <Target Name="CopyAddinsToAppData" AfterTargets="MergeDlls">
+    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
+    <ItemGroup>
+      <AddinFiles Include="..\bin\$(Configuration)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+  </Target>
+  
+  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
+    <!-- Delete previously deployed to AppData folder add-in files -->
+    <ItemGroup>
+      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
+    </ItemGroup>
+    <Delete Files="@(AddinFiles)" />
+  </Target>
+
   
 </Project>
