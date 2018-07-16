@@ -28,7 +28,7 @@ namespace RevitAddin
             if (null == app || null == doc)
             {
                 // TODO it's just an example, an external command can open a document if needed
-                MessageBox.Show("This command can be called only when a document is opened and ready!");
+                MessageBox.Show(StringLocalizer.CallingAssembly["This command can be called only when a document is opened and ready!"]);
                 return Result.Cancelled;
             }
 

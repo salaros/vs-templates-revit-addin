@@ -129,4 +129,7 @@
   <data name="Text 1" xml:space="preserve">
     <value>Текст 1</value>
   </data>
+  <data name="This command can be called only when a document is opened and ready!" xml:space="preserve">
+    <value>Эта команда может быть вызвана только если у Вас уже документ открыт и он готов к работе!</value>
+  </data>
 </root>
