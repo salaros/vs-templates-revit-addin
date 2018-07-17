@@ -18,11 +18,14 @@ using System.Threading;
 
 namespace RevitAddin
 {
+    /// <summary>
+    /// The main application defined in this add-in
+    /// </summary>
+    /// <seealso cref="T:Autodesk.Revit.UI.IExternalApplication" />
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class App : IExternalApplication
     {
-
         protected UIControlledApplication uiControlledApplication;
 
         /// <summary>
