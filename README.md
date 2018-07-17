@@ -17,14 +17,24 @@ Usually it's `"%USERPROFILE%\Documents\Visual Studio 2017\Templates\ProjectTempl
 
 ## Personalization
 
+#### Add-in metadata
+
 Unlike other add-in template this one doesn't require constantly updating .addin file. It takes all the information from project properties:
+
 ![Project properties](assets/properties-add-in-data.png "Project properties")
+
+#### Revit versions
+
+By default the newly created add-in will target Revit x64 2014-2019, you could target fewer versions by simply removing items from `TargetFrameworks`:
+
+![Revit versions](assets/revit-versions.png "Revit versions")
 
 ## Debug
 
 For your convenience in `Debug` configuration the add-in will copy its manifest to `%AppData%\Autodesk\Revit\Addins` folder with Assembly tags pointing to your compilation output folder.
 
 Before starting the debugger make sure you have selected the proper Revit version:
+
 ![Debugger selection](assets/debugger-selection.png "Debugger selection")
 
 If Revit won't start probably you have installed it to a non-default location and you have to modify [launchSettings.json](src/Properties/launchSettings.json) file.
