@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net451;net452;net46;net47</TargetFrameworks>
-    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
-    <PlatformTarget>x64</PlatformTarget>
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-  
-    <!-- Force the project to use the legacy debugger engine -->
-    <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
+    <TargetFrameworks>
+      <!-- Please remove the targets you don't need in order 
+           to exclude Revit versions your add-in won't support
+           use the list below for matching Revit version with .NET target -->
+      net40;net45;net451;net452;net46;net47
+    </TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -34,6 +33,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
+    <PlatformTarget>x64</PlatformTarget>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  
+    <!-- Force the project to use the legacy debugger engine -->
+    <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
+    
+    <!-- Invert the behavior of new .csproj format - exclude files by default -->
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultItems>false</EnableDefaultItems>
     
@@ -155,7 +162,7 @@
     </Task>
   </UsingTask>
   
-  <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="'$(Configuration)' == 'Debug'" >
+  <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="'$(Configuration)' == 'Debug'">
     <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
     <ItemGroup>
       <AddinFiles Include="..\bin\$(Configuration)\**\*.addin" />
