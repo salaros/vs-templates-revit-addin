@@ -5,7 +5,7 @@ $srcFiles = Get-ChildItem -Recurse .\src\* -Include *.cs*, *.addin | Where-Objec
 foreach ($file in $srcFiles) {
 	$outfile = ($file | Resolve-Path -Relative).Replace('\src\', '\dist\')
 	New-Item -ItemType Directory -Force -Path (Split-Path -Path $outfile -Parent) | Out-Null
-	(Get-Content $file).replace('RevitAddin', '$safeprojectname$') | Set-Content $outfile
+	(Get-Content $file).Replace('RevitAddin', '$safeprojectname$').Replace('00000000-0000-0000-0000-00000000000', '$guid').Replace('</ClientId', '$</ClientId') | Set-Content $outfile
 }
 
 # Copy static files
