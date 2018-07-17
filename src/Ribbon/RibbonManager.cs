@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
@@ -107,6 +108,16 @@ namespace RevitAddin
         /// <seealso cref="RibbonButton" />
         public abstract class RibbonButton
         {
+            private static Regex commandNonWordChars;
+
+            /// <summary>
+            /// Initializes the <see cref="RibbonButton"/> class.
+            /// </summary>
+            static RibbonButton()
+            {
+                commandNonWordChars = new Regex(@"\W", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            }
+
             /// <summary>
             /// Gets the text.
             /// </summary>
@@ -182,7 +193,7 @@ namespace RevitAddin
             {
                 return new PushButtonData
                 (
-                    $"cmd{item.Text.Replace(" ", string.Empty)}",
+                    $"cmd{commandNonWordChars.Replace(item.Text, string.Empty)}",
                     item.Text,
                     item.AssemblyPath,
                     $"{nameof(RevitAddin)}.{nameof(RibbonCommand)}"
