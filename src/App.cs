@@ -26,6 +26,17 @@ namespace RevitAddin
     [Regeneration(RegenerationOption.Manual)]
     public class App : IExternalApplication
     {
+        /// <summary>
+        /// Initializes the <see cref="App"/> class.
+        /// </summary>
+        static App()
+        {
+            #if WINFORMS
+            global:: System.Windows.Forms.Application.EnableVisualStyles();
+            global:: System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            #endif
+        }
+
         protected UIControlledApplication uiControlledApplication;
 
         /// <summary>

@@ -46,7 +46,8 @@
     
     <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
     e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
-    <DefineConstants>REVIT$(RevitVersion)</DefineConstants>
+    <DefineConstants>REVIT$(RevitVersion);WINFORMS</DefineConstants>
+    <PreprocessorDefinitions>$(DefineConstants)</PreprocessorDefinitions>
     
     <!-- Multiple targets can cause obj folder locking by concurrent builds -->
     <BuildInParallel>false</BuildInParallel>
@@ -60,6 +61,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   
   <ItemGroup>
