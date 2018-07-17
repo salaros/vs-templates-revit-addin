@@ -85,7 +85,7 @@ namespace RevitAddin
             {
                 try
                 {
-                    return resourceManager.GetString(str);
+                    return resourceManager.GetString(str) ?? str;
                 }
                 catch
                 {
