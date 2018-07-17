@@ -7,10 +7,6 @@ Visual Studio Revit Add-in Template
 
 Visual Studio C# (project) template for easy [Revit](https://en.wikipedia.org/wiki/Autodesk_Revit) add-in creation.
 
-## Know issues
-
-The new csproj format has known issues with [WinForms](https://en.wikipedia.org/wiki/Windows_Forms) / [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) files and classes showing and editing correctly in Visual Studio, Microsoft has already announced they will fix it in [.NET Core 3](https://blogs.msdn.microsoft.com/dotnet/2018/05/07/net-core-3-and-support-for-windows-desktop-applications/) release.
-
 ## License
 
 This project is licensed under the terms of the [MIT License](LICENSE).
