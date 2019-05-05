@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>
-      <!-- Please remove the targets you don't need in order 
+      <!-- Please remove the targets you don't need in order
            to exclude Revit versions your add-in won't support
            use the list below for matching Revit version with .NET target -->
       net40;net45;net451;net452;net46;net47
@@ -40,34 +40,34 @@
 
     <!-- Force the project to use the legacy debugger engine -->
     <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
-    
+
     <!-- Invert the behavior of new .csproj format - exclude files by default -->
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultItems>false</EnableDefaultItems>
-    
+
     <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
     e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
     <DefineConstants>REVIT$(RevitVersion);WINFORMS</DefineConstants>
     <PreprocessorDefinitions>$(DefineConstants)</PreprocessorDefinitions>
-    
+
     <!-- Multiple targets can cause obj folder locking by concurrent builds -->
     <BuildInParallel>false</BuildInParallel>
-    
+
     <!-- Override 'OutputPath' to Debug/Release + Revit version -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\$(Configuration)\$(RevitVersion)</OutputPath>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Revit2014x64-SDK" Version="1.1.0" Condition=" '$(RevitVersion)' == '2014' " />
     <PackageReference Include="Revit.RevitApi.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
@@ -94,39 +94,39 @@
     <Content Include="AddinManifest.addin">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-    
+
     <!-- Don't use standard resource generator, since it doesn't allow
          one to use strings containing spaces -->
     <EmbeddedResource Include="Properties\Resources.resx">
         <Generator />
     </EmbeddedResource>
-    
+
     <EmbeddedResource Include="Properties\Resources.ru-RU.resx">
         <Generator />
-    </EmbeddedResource>    
+    </EmbeddedResource>
 
-    <EmbeddedResource Include="Resources\testCommand.png">
+    <EmbeddedResource Include="Resources\**\*.*">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    
+
     <Content Include="Properties\launchSettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Ribbon\RibbonItems.cs" />
-    <Compile Include="Ribbon\RibbonManager.cs" />
+    <Compile Include="RibbonHelper.cs" />
     <Compile Include="App.cs" />
     <Compile Include="ExternalCommand.cs" />
     <Compile Include="RibbonCommand.cs" />
     <Compile Include="StringLocalizer.cs" />
+    <Compile Include="ZeroDocStateAvailability.cs" />
   </ItemGroup>
-  
+
   <PropertyGroup>
     <RootNamespace>RevitAddin</RootNamespace>
-	  <AssemblyName>RevitAddin</AssemblyName>
-    
+    <AssemblyName>RevitAddin</AssemblyName>
+
     <Authors>Your name</Authors>
     <PackageId>sample.vendor.id.change.it</PackageId>
     <Company>Acme Ltd</Company>
@@ -143,7 +143,7 @@
     <ReplaceFileText InputFilename="AddinManifest.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="FullClassName&gt;((.*?)\.)+" ReplacementText="FullClassName&gt;$(RootNamespace)." />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;Name&gt;(.*?)&lt;" ReplacementText="&lt;Name&gt;$(Product)&lt;" />
-    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />    
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
     <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
     <ReplaceFileText Condition="'$(Configuration)' == 'Debug'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
@@ -167,7 +167,7 @@
       </Code>
     </Task>
   </UsingTask>
-  
+
   <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="'$(Configuration)' == 'Debug'">
     <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
     <ItemGroup>
@@ -183,5 +183,5 @@
     </ItemGroup>
     <Delete Files="@(AddinFiles)" />
   </Target>
-  
+
 </Project>

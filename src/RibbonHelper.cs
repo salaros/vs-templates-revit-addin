@@ -15,23 +15,48 @@ namespace RevitAddin
     /// </summary>
     public static partial class RibbonHelper
     {
-        // ReSharper disable once UnassignedReadonlyField
-        public static readonly List<RibbonButton> RibbonItems;
-        // ReSharper disable once UnassignedReadonlyField
-        public static readonly string RibbonTitle;
-
         /// <summary>
         /// Adds buttons to the Revit ribbon.
         /// </summary>
-        /// <param name="application">The application.</param>
-        public static void AddButtons(UIControlledApplication application)
+        /// <param name="uiApp">The UI application.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="ribbonPanelName">Name of the ribbon panel.</param>
+        /// <param name="ribbonTabName">Name of the ribbon tab.</param>
+        public static void AddButtons(
+            UIControlledApplication uiApp,
+            IEnumerable<RibbonButton> items,
+            string ribbonPanelName = "",
+            string ribbonTabName = ""
+        )
         {
-            // Add a new ribbon panel
-            var ribbonName = string.IsNullOrWhiteSpace(RibbonTitle) ? nameof(RevitAddin) : RibbonTitle;
-            var ribbonPanel = application.CreateRibbonPanel(ribbonName);
+            ribbonPanelName = string.IsNullOrWhiteSpace(ribbonPanelName)
+                ? nameof(RevitAddin)
+                : ribbonPanelName;
 
-            foreach (var item in RibbonItems)
-                ribbonPanel.AddItem(item);
+            RibbonPanel ribbonPanel = null;
+            try
+            {
+                uiApp.CreateRibbonTab(ribbonTabName);
+            }
+            finally
+            {
+
+            }
+
+            try
+            {
+                // Add a new ribbon panel
+                ribbonPanel = string.IsNullOrWhiteSpace(ribbonTabName)
+                    ? uiApp.CreateRibbonPanel(ribbonPanelName)
+                    : uiApp.CreateRibbonPanel(ribbonTabName, ribbonPanelName);
+            }
+            finally
+            {
+                foreach (var ribbonButton in items)
+                {
+                    ribbonPanel?.AddItem(ribbonButton);
+                }
+            }
         }
 
         /// <summary>
@@ -42,7 +67,7 @@ namespace RevitAddin
         public static BitmapSource ConvertFromImage(Bitmap image)
         {
             return Imaging.CreateBitmapSourceFromHBitmap(
-                image.GetHbitmap(),                
+                image.GetHbitmap(),
                 IntPtr.Zero,
                 System.Windows.Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
@@ -52,9 +77,9 @@ namespace RevitAddin
         /// Ribbon button item helper
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <seealso cref="RevitAddin.RibbonHelper.RibbonButton" />
+        /// <seealso cref="RibbonButton" />
         /// <inheritdoc />
-        /// <seealso cref="T:RevitAddin.RibbonHelper.RibbonButton" />
+        /// <seealso cref="T:Equipple.Revit.FamilyBrowser.Ribbon.RibbonHelper.RibbonButton" />
         public class RibbonButton<T> : RibbonButton
             where T : class, IExternalCommand
         {
@@ -104,11 +129,11 @@ namespace RevitAddin
         /// <summary>
         /// Ribbon button item abstract helper
         /// </summary>
-        /// <seealso cref="RevitAddin.RibbonHelper.RibbonButton" />
+        /// <seealso cref="RibbonButton" />
         /// <seealso cref="RibbonButton" />
         public abstract class RibbonButton
         {
-            private static Regex commandNonWordChars;
+            private static readonly Regex commandNonWordChars;
 
             /// <summary>
             /// Initializes the <see cref="RibbonButton"/> class.
@@ -183,6 +208,14 @@ namespace RevitAddin
             public abstract string AssemblyPath { get; }
 
             /// <summary>
+            /// Gets or sets the name of the availability class.
+            /// </summary>
+            /// <value>
+            /// The name of the availability class.
+            /// </value>
+            public string AvailabilityClassName { get; set; }
+
+            /// <summary>
             /// Performs an implicit conversion from <see cref="RibbonButton"/> to <see cref="PushButtonData"/>.
             /// </summary>
             /// <param name="item">The item.</param>
@@ -196,15 +229,15 @@ namespace RevitAddin
                     $"cmd{commandNonWordChars.Replace(item.Text, string.Empty)}",
                     item.Text,
                     item.AssemblyPath,
-                    $"{nameof(RevitAddin)}.{nameof(RibbonCommand)}"
+                    item.Command.FullName
                 )
                 {
                     LongDescription = item.Tooltip,
                     ToolTip = item.Tooltip,
                     Image = (null == item.Icon) ? null : ConvertFromImage(new Bitmap(item.Icon, 16, 16)),
                     LargeImage = (null == item.Icon) ? null : ConvertFromImage(new Bitmap(item.Icon, 32, 32)),
-                    ToolTipImage  = (null == item.TooltipIcon) ? null : ConvertFromImage(new Bitmap(item.TooltipIcon, 192, 192)),
-
+                    ToolTipImage = (null == item.TooltipIcon) ? null : ConvertFromImage(new Bitmap(item.TooltipIcon, 192, 192)),
+                    AvailabilityClassName = item.AvailabilityClassName,
                 };
             }
         }

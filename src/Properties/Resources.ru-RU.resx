@@ -120,11 +120,14 @@
   <data name="Localization: test string with spaces" xml:space="preserve">
     <value>Локализация: тестовая строка с пробелами -&gt; работает!</value>
   </data>
+  <data name="My test tooltip" xml:space="preserve">
+    <value>Моя тестовая подсказка</value>
+  </data>
+  <data name="Test panel" xml:space="preserve">
+    <value>Тестовая панель</value>
+  </data>
   <data name="Test ribbon" xml:space="preserve">
     <value>Тестовое меню</value>
-  </data>
-  <data name="Test tooltip" xml:space="preserve">
-    <value>Тестовая подсказка</value>
   </data>
   <data name="Text 1" xml:space="preserve">
     <value>Текст 1</value>

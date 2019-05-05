@@ -1,6 +1,7 @@
 #region Namespaces
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -26,39 +27,39 @@ namespace RevitAddin
     [Regeneration(RegenerationOption.Manual)]
     public class App : IExternalApplication
     {
+        protected UIControlledApplication uiControlledApplication;
+
         /// <summary>
         /// Initializes the <see cref="App"/> class.
         /// </summary>
         static App()
         {
-            #if WINFORMS
-            global:: System.Windows.Forms.Application.EnableVisualStyles();
-            global:: System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            #endif
+#if WINFORMS
+            global::System.Windows.Forms.Application.EnableVisualStyles();
+            global::System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+#endif
         }
-
-        protected UIControlledApplication uiControlledApplication;
 
         /// <summary>
         /// Called when [startup].
         /// </summary>
-        /// <param name="uiCtrlApp">The UI control application.</param>
+        /// <param name="uiControlledApplication">The UI control application.</param>
         /// <returns></returns>
         /// ReSharper disable once ParameterHidesMember
-        public Result OnStartup(UIControlledApplication uiCtrlApp)
+        public Result OnStartup(UIControlledApplication uiControlledApplication)
         {
-            uiControlledApplication = uiCtrlApp;
+            this.uiControlledApplication = uiControlledApplication;
 
 #if REVIT2017
             // A workaround for a bug with UI culture in Revit 2017.1.1
             // More info here: https://forums.autodesk.com/t5/revit-api-forum/why-the-language-key-switches-currentculture-instead-of/m-p/6843557/highlight/true#M20779
-            var language = uiCtrlApp.ControlledApplication.Language.ToString();
+            var language = uiControlledApplication.ControlledApplication.Language.ToString();
             Thread.CurrentThread.CurrentUICulture = CultureInfo
                                                         .GetCultures(CultureTypes.SpecificCultures)
                                                         .FirstOrDefault(c => language.Contains(c.EnglishName)) ?? Thread.CurrentThread.CurrentUICulture;
 #endif
 
-            RibbonHelper.AddButtons(uiCtrlApp);
+            InitializeRibbon();
 
             try
             {
@@ -125,9 +126,39 @@ namespace RevitAddin
             return Result.Succeeded;
         }
 
+        private void InitializeRibbon()
+        {
+            // TODO declare your ribbon items here
+            var ribbonItems = new List<RibbonHelper.RibbonButton>
+            {
+                new RibbonHelper.RibbonButton<RibbonCommand>                        // One can reference commands defined in other assemblies
+                {
+                    // You could make your ribbon buttons active with no documenent open/active
+                    // Try to create your own class with complex rules on when the given button is active and when it's not
+                    AvailabilityClassName = typeof(ZeroDocStateAvailability).FullName,
+                    Text = StringLocalizer.CallingAssembly["Always active"],        // Text displayed on the command, can be stored in the resources
+                    Tooltip = StringLocalizer.CallingAssembly["I'm always active"], // Tooltip and long description
+                    IconName = "Resources.trollFace.png",                           // Path to the image, it's relative to the assembly where the command above is defined
+                },
+                new RibbonHelper.RibbonButton<RibbonCommand>                        // One can reference commands defined in other assemblies
+                {
+                    Text = StringLocalizer.CallingAssembly["Text 1"],               // Text displayed on the command, can be stored in the resources
+                    Tooltip = StringLocalizer.CallingAssembly["My test tooltip"],   // Tooltip and long description
+                    IconName = "Resources.testCommand.png",                         // Path to the image, it's relative to the assembly where the command above is defined
+                }
+            };
+
+            RibbonHelper.AddButtons(
+                uiControlledApplication,
+                ribbonItems,
+                ribbonPanelName: StringLocalizer.CallingAssembly["Test panel"],     // The title of the ribbot panel
+                ribbonTabName: StringLocalizer.CallingAssembly["Test ribbon"]       // The title of the ribbon tab
+            );
+        }
+
         /// <summary>
         /// Called when [idling].
-        /// This event is raised only when the Revit UI is in a state 
+        /// This event is raised only when the Revit UI is in a state
         /// when there is no active document.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -165,7 +196,7 @@ namespace RevitAddin
             var uiapp = new UIApplication(app);
             Debug.Assert(null != uiapp, $"Expected a valid Revit {nameof(UIApplication)} instance");
         }
-        
+
         /// <summary>
         /// Called when [document changed].
         /// </summary>
@@ -223,7 +254,7 @@ namespace RevitAddin
         {
             // TODO: add you code here
         }
-        
+
         /// <summary>
         /// Called when [document closing].
         /// </summary>
