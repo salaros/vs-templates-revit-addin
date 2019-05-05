@@ -1,12 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>
-      <!-- Please remove the targets you don't need in order
-           to exclude Revit versions your add-in won't support
-           use the list below for matching Revit version with .NET target -->
-      net40;net45;net451;net452;net46;net47
-    </TargetFrameworks>
+    <Configurations>Debug;Debug One;Release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Please remove the targets you don't need in order
+      to exclude Revit versions your add-in won't support
+      use the list below for matching Revit version with .NET target
+              2014  |  net40
+              2015  |  net45
+              2016  |  net451
+              2017  |  net452
+              2018  |  net46
+              2019  |  net47
+      -->
+    <TargetFrameworks>net45;net451;net452;net46;net47</TargetFrameworks>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug One'">
+    <!-- You could debug just ONE addin version,
+         instead of building all the versions above.
+         Just put ONE target from the list above
+         e.g. if you want to debug ONLY Revit 2019,
+         put net47 below and switch to 'Debug One' configuration
+      -->
+    <TargetFrameworks>net47</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -26,10 +46,6 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <RevitVersion>2019</RevitVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -56,6 +72,12 @@
     <!-- Override 'OutputPath' to Debug/Release + Revit version -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\$(Configuration)\$(RevitVersion)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <OutputPath>..\bin\Debug\$(RevitVersion)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
