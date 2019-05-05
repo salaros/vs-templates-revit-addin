@@ -23,16 +23,15 @@
       <Folder Name=".vs" TargetFolderName=".vs" />
       <Folder Name="Resources" TargetFolderName="Resources">
         <ProjectItem ReplaceParameters="false" TargetFileName="testCommand.png">testCommand.png</ProjectItem>
-      </Folder>
-      <Folder Name="Ribbon" TargetFolderName="Ribbon">
-        <ProjectItem ReplaceParameters="true" TargetFileName="RibbonItems.cs">RibbonItems.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="RibbonManager.cs">RibbonManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="trollFace.png">trollFace.png</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="AddinManifest.addin">AddinManifest.addin</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.cs">App.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="ExternalCommand.cs">ExternalCommand.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="RibbonCommand.cs">RibbonCommand.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="RibbonHelper.cs">RibbonHelper.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="StringLocalizer.cs">StringLocalizer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ZeroDocStateAvailability.cs">ZeroDocStateAvailability.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>
