@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
     <TargetFrameworks>
@@ -35,8 +35,9 @@
   <PropertyGroup>
     <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
     <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-  
+
     <!-- Force the project to use the legacy debugger engine -->
     <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
     
@@ -129,7 +130,7 @@
     <Authors>Your name</Authors>
     <PackageId>sample.vendor.id.change.it</PackageId>
     <Company>Acme Ltd</Company>
-    <PackageProjectUrl>http://example.com</PackageProjectUrl>
+    <PackageProjectUrl>http://example.com/test</PackageProjectUrl>
     <Product>The description for your application goes here</Product>
     <Version>0.0.1</Version>
     <NeutralLanguage>en</NeutralLanguage>
