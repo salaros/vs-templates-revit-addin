@@ -78,6 +78,8 @@ namespace RevitAddin
                 // Closing
                 uiControlledApplication.ControlledApplication.DocumentClosing += OnDocumentClosing;
                 uiControlledApplication.ControlledApplication.DocumentClosed += OnDocumentClosed;
+                // Views
+                uiControlledApplication.ViewActivated += OnViewActivated;
 
                 // TODO: add you code here
             }
@@ -114,6 +116,8 @@ namespace RevitAddin
                 // Closing
                 uiControlledApplication.ControlledApplication.DocumentClosing -= OnDocumentClosing;
                 uiControlledApplication.ControlledApplication.DocumentClosed -= OnDocumentClosed;
+                // Views
+                uiControlledApplication.ViewActivated -= OnViewActivated;
 
                 // TODO: add you code here
             }
@@ -273,6 +277,17 @@ namespace RevitAddin
         /// <param name="args">The <see cref="DocumentClosedEventArgs" /> instance containing the event data.</param>
         /// ReSharper disable once MemberCanBeMadeStatic.Local
         private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
+        {
+            // TODO: add you code here
+        }
+
+        /// <summary>
+        /// Called when [view activated].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ViewActivatedEventArgs"/> instance containing the event data.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void OnViewActivated(object sender, ViewActivatedEventArgs e)
         {
             // TODO: add you code here
         }
