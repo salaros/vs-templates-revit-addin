@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Configurations>Debug;Debug One;Release</Configurations>
@@ -14,8 +14,10 @@
               2017  |  net452
               2018  |  net46
               2019  |  net47
+              2020  |  net471
+      For example you can exclude Revit 2014, by simply removing net40 target belows
       -->
-    <TargetFrameworks>net45;net451;net452;net46;net47</TargetFrameworks>
+    <TargetFrameworks>net45;net451;net452;net46;net47;net471</TargetFrameworks>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
 
@@ -26,7 +28,7 @@
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net47</TargetFrameworks>
+    <TargetFrameworks>net471</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -46,6 +48,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <RevitVersion>2019</RevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <RevitVersion>2020</RevitVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -91,23 +96,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Revit2014x64-SDK" Version="1.1.0" Condition=" '$(RevitVersion)' == '2014' " />
-    <PackageReference Include="Revit.RevitApi.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
-    <PackageReference Include="Revit.RevitApiUI.x64" Version="2015.0.0" Condition=" '$(RevitVersion)' == '2015' " />
-    <PackageReference Include="Revit.RevitApi.x64" Version="2016.0.0" Condition=" '$(RevitVersion)' == '2016' " />
-    <PackageReference Include="Revit.RevitApiUI.x64" Version="2016.0.0" Condition=" '$(RevitVersion)' == '2016' " />
-    <PackageReference Include="Revit.RevitApi.x64" Version="2017.0.0" Condition=" '$(RevitVersion)' == '2017' " />
-    <PackageReference Include="Revit.RevitApiUI.x64" Version="2017.0.0" Condition=" '$(RevitVersion)' == '2017' " />
-    <PackageReference Include="Revit.RevitApi.x64" Version="2018.0.0" Condition=" '$(RevitVersion)' == '2018' " />
-    <PackageReference Include="Revit.RevitApiUI.x64" Version="2018.0.0" Condition=" '$(RevitVersion)' == '2018' " />
-    <PackageReference Include="Revit.RevitApi.x64" Version="2019.0.0" Condition=" '$(RevitVersion)' == '2019' " />
-    <PackageReference Include="Revit.RevitApiUI.x64" Version="2019.0.0" Condition=" '$(RevitVersion)' == '2019' " />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2014.*" Condition=" '$(RevitVersion)' == '2014' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2015.*" Condition=" '$(RevitVersion)' == '2015' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2016.*" Condition=" '$(RevitVersion)' == '2016' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2017.*" Condition=" '$(RevitVersion)' == '2017' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
     <ItemGroup>
       <!-- A temporary fix for Revit SDK files being copied to the output folder -->
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit2014x64-SDK' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApi.x64' Or '%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Revit.RevitApiUI.x64'" />
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Autodesk.Revit.SDK'" />
     </ItemGroup>
   </Target>
 

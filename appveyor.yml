@@ -59,19 +59,19 @@ install:
 # Run scripts below before
 before_build:
   - where msbuild
-  - cmd: msbuild /t:Clean 
+  - cmd: msbuild /t:Clean
 
 # To run your custom scripts instead of automatic MSBuild
 build_script:
-  - cmd: msbuild /t:Rebuild 
+  - cmd: msbuild /t:Rebuild
   - ps: .\build.ps1
 
 after_build:
-  - cmd: 7z a RevitAddin_2014-2019.zip %APPVEYOR_BUILD_FOLDER%\dist\*.*
-  - cmd: 7z a RevitAddin_2014-2019.zip %APPVEYOR_BUILD_FOLDER%\dist\**\*.*
+  - cmd: 7z a RevitAddin_2014-2020.zip %APPVEYOR_BUILD_FOLDER%\dist\*.*
+  - cmd: 7z a RevitAddin_2014-2020.zip %APPVEYOR_BUILD_FOLDER%\dist\**\*.*
 
 artifacts:
-  - path: RevitAddin_2014-2019.zip
+  - path: RevitAddin_2014-2020.zip
     name: RevitAddin
 
 after_deploy:
@@ -83,7 +83,7 @@ after_deploy:
                 "Content-type" = "application/json"
             }
             Invoke-RestMethod -Method Put "$apiUrl/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/settings/build-number" -Body '{"nextBuildNumber": 1 }' -Headers $headers
-            
+            ## Update the version in case of ragged build
             $env:APPVEYOR_REPO_TAG_NAME = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v")
             if ($env:APPVEYOR_REPO_TAG_NAME -match '^([0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?)$') {
                 $tag_ver = [version]$env:APPVEYOR_REPO_TAG_NAME
@@ -94,16 +94,16 @@ after_deploy:
         }
 
 # Deploy to GitHub releases
-deploy: 
-  - 
+deploy:
+  -
     provider: GitHub
-    auth_token: 
+    auth_token:
       secure: 2+d0KgCbWQpUR8TZfzvUEzbi4NQP6F/Tt0PUwLn6jXZCyO8FnrFVFJPsFa0QBQFl
     artifact: RevitAddin
     draft: false
     force_update: true
     prerelease: false
-    release: "Revit 2014-2019 C# Addin Template fro Visual Studio v$(APPVEYOR_REPO_TAG_NAME)"
+    release: "Revit 2014-2020 C# Addin Template fro Visual Studio v$(APPVEYOR_REPO_TAG_NAME)"
     tag: $(APPVEYOR_REPO_TAG_NAME)
-    on: 
+    on:
       appveyor_repo_tag: true
