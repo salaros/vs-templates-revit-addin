@@ -1,4 +1,4 @@
-Visual Studio Revit Add-in Template [![Build status](https://ci.appveyor.com/api/projects/status/vxajagat45cfeeky?svg=true)](https://ci.appveyor.com/project/salaros/vs-templates-revit-addin)
+﻿Visual Studio Revit Add-in Template [![Build status](https://ci.appveyor.com/api/projects/status/vxajagat45cfeeky?svg=true)](https://ci.appveyor.com/project/salaros/vs-templates-revit-addin)
 ===================================
 
 ![Revit version](https://img.shields.io/badge/Revit-2014%20%E2%9E%9C%202019-blue.svg)
@@ -11,9 +11,20 @@ Visual Studio C# (project) template for easy [Revit](https://en.wikipedia.org/wi
 
 ## Installation & Update
 
-Just download the latest release (.zip file) from [here](https://github.com/Equipple/vs-templates-revit-addin/releases) and copy it into your `path\to\Visual Studio 2017\templates` folder.
+Just grab the latest release (.zip file) from [releases page](https://github.com/Equipple/vs-templates-revit-addin/releases) and copy it into 
 
-Usually it's `"%USERPROFILE%\Documents\Visual Studio 2017\Templates\ProjectTemplates\Visual C#"`
+```
+"%USERPROFILE%\Documents\Visual Studio 2019\Templates\ProjectTemplates\Visual C#"
+```
+
+(use Visual Studio 2017 if you have that version)
+
+
+## 🟊🟊🟊 Support this project 🟊🟊🟊
+
+You can support us in a small way, please consider starring and sharing this repo! It helps us getting known and grow the community.
+![star us](.github/assets/star_us.gif)
+
 
 ## Personalization
 
