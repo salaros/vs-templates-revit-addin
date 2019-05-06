@@ -12,11 +12,11 @@ using Autodesk.Revit.UI.Selection;
 namespace RevitAddin
 {
     /// <summary>
-    /// A simple example of an external command, usually it's used for batch processing 
+    /// A simple example of an external command, usually it's used for batch processing
     /// files loaded when Revit is idling
     /// </summary>
-    [Transaction(TransactionMode.Manual)] 
-    [Regeneration(RegenerationOption.Manual)] 
+    [Transaction(TransactionMode.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class ExternalCommand : IExternalCommand
     {
         /// <summary>
@@ -31,7 +31,8 @@ namespace RevitAddin
             ExternalCommandData commandData,
             ref string message,
             ElementSet elements
-        ){
+        )
+        {
             var uiapp = commandData?.Application;
             var uidoc = uiapp?.ActiveUIDocument;
             var app = uiapp?.Application;
