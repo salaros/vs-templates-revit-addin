@@ -1,7 +1,7 @@
 ﻿Visual Studio Revit Add-in Template [![Build status](https://ci.appveyor.com/api/projects/status/vxajagat45cfeeky?svg=true)](https://ci.appveyor.com/project/salaros/vs-templates-revit-addin)
 ===================================
 
-![Revit version](https://img.shields.io/badge/Revit-2014%20%E2%9E%9C%202019-blue.svg)
+![Revit version](https://img.shields.io/badge/Revit-2014%20%E2%9E%9C%202020-blue.svg)
 ![Github All Releases](https://img.shields.io/github/downloads/Equipple/vs-templates-revit-addin/total.svg)
 ![GitHub tag](https://img.shields.io/github/tag/Equipple/vs-templates-revit-addin.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-red.svg)
