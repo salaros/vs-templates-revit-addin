@@ -5,7 +5,7 @@ using Autodesk.Revit.UI;
 namespace RevitAddin
 {
     /// <summary>
-    /// A sample ribbon command, demonstrates the possibility to bing Revit commands to ribbon buttons
+    /// A sample ribbon command, demonstrates the possibility to bind Revit commands to ribbon buttons
     /// </summary>
     /// <seealso cref="T:Autodesk.Revit.UI.IExternalCommand" />
     [Transaction(TransactionMode.Manual)]
