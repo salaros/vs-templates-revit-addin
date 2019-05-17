@@ -17,7 +17,7 @@
               2020  |  net471
       For example you can exclude Revit 2014, by simply removing net40 target belows
       -->
-    <TargetFrameworks>net45;net451;net452;net46;net47;net471</TargetFrameworks>
+    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471</TargetFrameworks>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
 
