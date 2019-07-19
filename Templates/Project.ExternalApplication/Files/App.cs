@@ -37,16 +37,21 @@ namespace $safeprojectname$
         /// </summary>
         static App()
         {
+            // Below code is commented as can prevent your add-in from being loaded.
+            // If implementing any WinForms and no behaving properly, please uncomment.
+#if WINFORMS
+            //global::System.Windows.Forms.Application.EnableVisualStyles();
+            //global::System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+#endif
+    }
 
-        }
-
-        /// <summary>
-        /// Called when [startup].
-        /// </summary>
-        /// <param name="uiControlledApplication">The UI control application.</param>
-        /// <returns></returns>
-        /// ReSharper disable once ParameterHidesMember
-        public Result OnStartup(UIControlledApplication uiControlledApplication)
+    /// <summary>
+    /// Called when [startup].
+    /// </summary>
+    /// <param name="uiControlledApplication">The UI control application.</param>
+    /// <returns></returns>
+    /// ReSharper disable once ParameterHidesMember
+    public Result OnStartup(UIControlledApplication uiControlledApplication)
         {
             this.uiControlledApplication = uiControlledApplication;
 
@@ -135,19 +140,19 @@ namespace $safeprojectname$
             // TODO declare your ribbon items here
             var ribbonItems = new List<RibbonHelper.RibbonButton>
             {
-                new RibbonHelper.RibbonButton<HelloWorldCommand>                        // One can reference commands defined in other assemblies
+                new RibbonHelper.RibbonButton<HelloWorldCommand>    // One can reference commands defined in other assemblies
                 {
-                    Text = "Hello World!",               // Text displayed on the command, can be stored in the resources
-                    Tooltip = "My test tooltip",   // Tooltip and long description
-                    IconName = "Resources.testCommand.png",                         // Path to the image, it's relative to the assembly where the command above is defined
+                    Text = "Hello World!",                          // Text displayed on the command, can be stored in the resources
+                    Tooltip = "My test tooltip",                    // Tooltip and long description
+                    IconName = "Resources.testCommand.png",         // Path to the image, it's relative to the assembly where the command above is defined
                 }
             };
 
             RibbonHelper.AddButtons(
                 uiControlledApplication,
                 ribbonItems,
-                ribbonPanelName: "Test panel",     // The title of the ribbot panel
-                ribbonTabName: "$safeprojectname$"       // The title of the ribbon tab
+                ribbonPanelName: "Test panel",          // The title of the ribbot panel
+                ribbonTabName: "$safeprojectname$"      // The title of the ribbon tab
             );
         }
 
