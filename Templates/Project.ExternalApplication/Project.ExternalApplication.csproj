@@ -64,7 +64,7 @@
   <ItemGroup>
     <None Include="TemplateProperties\AssemblyInfo.cs" />
     <None Include="TemplateProperties\launchSettings.json" />
-    <None Include="RevitDev.ExternalApplication.csproj" />
+    <None Include="ExternalApplication.csproj" />
   </ItemGroup>
   <ItemGroup>
     <VSTemplate Include="Project.ExternalApplication.vstemplate" />

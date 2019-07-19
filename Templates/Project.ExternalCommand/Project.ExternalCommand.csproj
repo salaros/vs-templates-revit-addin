@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Project.ExternalCommand.ico" />
-    <None Include="RevitDev.ExternalCommand.csproj" />
+    <None Include="ExternalCommand.csproj" />
     <VSTemplate Include="Project.ExternalCommand.vstemplate" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
