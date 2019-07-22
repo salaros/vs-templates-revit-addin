@@ -56,9 +56,30 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.1.3132" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Templates\Item.ExternalApplication\Item.ExternalApplication.csproj">
+      <Project>{67104F22-AAFD-4FC3-BA69-BF7C8D8A25CD}</Project>
+      <Name>Item.ExternalApplication</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\Templates\Item.ExternalCommand\Item.ExternalCommand.csproj">
+      <Project>{79EE33AD-B194-4312-B66C-140CE02B6A16}</Project>
+      <Name>Item.ExternalCommand</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
     <ProjectReference Include="..\Templates\Project.ExternalApplication\Project.ExternalApplication.csproj">
       <Project>{BCF8B7E6-0D97-4AE1-AB3B-26AAF60732A0}</Project>
       <Name>Project.ExternalApplication</Name>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\Templates\Project.ExternalCommand\Project.ExternalCommand.csproj">
+      <Project>{5F774587-1A80-44BD-BA2E-820CF974DFB2}</Project>
+      <Name>Project.ExternalCommand</Name>
       <VSIXSubPath>ProjectTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
