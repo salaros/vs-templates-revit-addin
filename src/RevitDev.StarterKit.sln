@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.ExternalApplication
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{40F08C22-7760-4E44-8613-8B9143A275C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitDev.Extension", "RevitDev.Extension\RevitDev.Extension.csproj", "{DAB19057-139F-46FD-A291-C15B44AC244C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.ExternalCommand", "Templates\Project.ExternalCommand\Project.ExternalCommand.csproj", "{5F774587-1A80-44BD-BA2E-820CF974DFB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Item.ExternalCommand", "Templates\Item.ExternalCommand\Item.ExternalCommand.csproj", "{79EE33AD-B194-4312-B66C-140CE02B6A16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Item.ExternalApplication", "Templates\Item.ExternalApplication\Item.ExternalApplication.csproj", "{67104F22-AAFD-4FC3-BA69-BF7C8D8A25CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitDev.StarterKit", "RevitDev.StarterKit\RevitDev.StarterKit.csproj", "{DAB19057-139F-46FD-A291-C15B44AC244C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,6 @@ Global
 		{BCF8B7E6-0D97-4AE1-AB3B-26AAF60732A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BCF8B7E6-0D97-4AE1-AB3B-26AAF60732A0}.Release|x64.ActiveCfg = Release|Any CPU
 		{BCF8B7E6-0D97-4AE1-AB3B-26AAF60732A0}.Release|x64.Build.0 = Release|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|x64.Build.0 = Debug|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|x64.ActiveCfg = Release|Any CPU
-		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|x64.Build.0 = Release|Any CPU
 		{5F774587-1A80-44BD-BA2E-820CF974DFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F774587-1A80-44BD-BA2E-820CF974DFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F774587-1A80-44BD-BA2E-820CF974DFB2}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -63,6 +55,14 @@ Global
 		{67104F22-AAFD-4FC3-BA69-BF7C8D8A25CD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67104F22-AAFD-4FC3-BA69-BF7C8D8A25CD}.Release|x64.ActiveCfg = Release|Any CPU
 		{67104F22-AAFD-4FC3-BA69-BF7C8D8A25CD}.Release|x64.Build.0 = Release|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Debug|x64.Build.0 = Debug|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|x64.ActiveCfg = Release|Any CPU
+		{DAB19057-139F-46FD-A291-C15B44AC244C}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

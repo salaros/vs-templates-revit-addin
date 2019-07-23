@@ -13,8 +13,8 @@
     <ProjectGuid>{DAB19057-139F-46FD-A291-C15B44AC244C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RevitDev.Extension</RootNamespace>
-    <AssemblyName>RevitDev.Extension</AssemblyName>
+    <RootNamespace>RevitDev.StarterKit</RootNamespace>
+    <AssemblyName>RevitDev.StarterKit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -96,6 +96,6 @@
     <ItemGroup>
       <ReleaseFiles Include="$(OutDir)**\*" />
     </ItemGroup>
-    <Copy Condition="'$(Configuration)' == 'Release'" SourceFiles="@(ReleaseFiles)" DestinationFolder="$(SolutionDir)\dist\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+    <Copy Condition="'$(Configuration)' == 'Release'" SourceFiles="@(ReleaseFiles)" DestinationFolder="$(SolutionDir)..\dist\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
   </Target>
 </Project>
