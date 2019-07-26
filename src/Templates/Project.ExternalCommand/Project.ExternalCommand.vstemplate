@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>RevitDev - ExternalCommand Project</Name>
+    <Description>Template for a Revit 2014-2020 C# .NET, ExternalCommand Project</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>RevitDev.ExternalCommand</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>Project.ExternalCommand.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ExternalCommand.csproj" ReplaceParameters="true">
+      <Folder Name="TemplateProperties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
+      </Folder>
+      <Folder Name="Manifests" TargetFolderName="Manifests">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AddinTemplate.addin">AddinTemplate.addin</ProjectItem>
+      </Folder>
+      <Folder Name="Files" TargetFolderName="./">
+        <ProjectItem ReplaceParameters="true" TargetFileName="HelloWorldCommand.cs">HelloWorldCommand.cs</ProjectItem>
+      </Folder>
+      
+    </Project>
+  </TemplateContent>
+</VSTemplate>

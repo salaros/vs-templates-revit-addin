@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>RevitDev - ExternalApplication File</Name>
+    <Description>Template for a Revit 2014-2020 C# .NET, ExternalApplication File</Description>
+    <Icon>Item.ExternalApplication.ico</Icon>
+    <TemplateID>0259defa-5bdc-4ca2-a856-797a91031c5c</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>ExternalApplication.cs</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true">ExternalApplication.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

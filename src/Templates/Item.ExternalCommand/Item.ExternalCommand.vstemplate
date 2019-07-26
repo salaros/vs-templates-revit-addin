@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>RevitDev - ExternalCommand File</Name>
+    <Description>Template for a Revit 2014-2020 C# .NET, ExternalCommand File</Description>
+    <Icon>Item.ExternalCommand.ico</Icon>
+    <TemplateID>af513790-f22a-448d-b436-5595ef294ca8</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>ExternalCommand.cs</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true">ExternalCommand.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

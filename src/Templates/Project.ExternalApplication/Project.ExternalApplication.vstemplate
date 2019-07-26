@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>RevitDev - ExternalApplication Project</Name>
+    <Description>Template for a Revit 2014-2020 C# .NET, ExternalApplication Project</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>RevitDev.ExternalApplication</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>Project.ExternalApplication.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ExternalApplication.csproj" ReplaceParameters="true">
+      <Folder Name="TemplateProperties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
+      </Folder>
+      <Folder Name="Resources" TargetFolderName="Resources">
+        <ProjectItem ReplaceParameters="false" TargetFileName="testCommand.png">testCommand.png</ProjectItem>
+      </Folder>
+      <Folder Name="Files/Commands" TargetFolderName="Commands">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ExternalCommand.cs">ExternalCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HelloWorldCommand.cs">HelloWorldCommand.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Files/Utils" TargetFolderName="Utils">
+        <ProjectItem ReplaceParameters="true" TargetFileName="RibbonHelper.cs">RibbonHelper.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Files" TargetFolderName="./">
+        <ProjectItem ReplaceParameters="true" TargetFileName="App.cs">App.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Manifests" TargetFolderName="Manifests">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AddinTemplate.addin">AddinTemplate.addin</ProjectItem>
+      </Folder>
+      
+    </Project>
+  </TemplateContent>
+</VSTemplate>
