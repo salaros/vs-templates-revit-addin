@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005"
+    xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <DefaultName>RevitAddinSolutionItems</DefaultName>
+    <Name>Revit C# Addin</Name>
+    <Description>Addintional solution items for Revit C# addin</Description>
+    <TemplateID>8d7c58f3-9f20-4be0-a96e-afc85ef3e236</TemplateID>
+    <ProjectType>General</ProjectType>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <Icon>__TemplateIcon.ico</Icon>
+    <PreviewImage>__PreviewImage.png</PreviewImage>
+    <Hidden>true</Hidden>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem ReplaceParameters="false">.editorconfig</ProjectItem>
+    <ProjectItem ReplaceParameters="false">.gitattributes</ProjectItem>
+    <ProjectItem ReplaceParameters="false">.gitignore</ProjectItem>
+    <ProjectItem ReplaceParameters="false">CodeAnalyzers.targets</ProjectItem>
+    <ProjectItem ReplaceParameters="false">Directory.Build.props</ProjectItem>
+    <ProjectItem ReplaceParameters="false">Directory.Build.targets</ProjectItem>
+    <ProjectItem ReplaceParameters="false">stylecop.json</ProjectItem>
+    <ProjectItem ReplaceParameters="false">stylecop.ruleset</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

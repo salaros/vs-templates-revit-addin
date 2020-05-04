@@ -1,19 +1,16 @@
-#region Namespaces
-
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-#endregion
-
 namespace RevitAddin
 {
     /// <summary>
     /// A simple example of an external command, usually it's used for batch processing
-    /// files loaded when Revit is idling
+    /// files loaded when Revit is idling.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -30,15 +27,14 @@ namespace RevitAddin
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
-            ElementSet elements
-        )
+            ElementSet elements)
         {
             var uiapp = commandData?.Application;
             var uidoc = uiapp?.ActiveUIDocument;
             var app = uiapp?.Application;
             var doc = uidoc?.Document;
 
-            if (null == app || null == doc)
+            if (app == null || doc == null)
             {
                 // TODO it's just an example, an external command can open a document if needed
                 MessageBox.Show(StringLocalizer.CallingAssembly["This command can be called only when a document is opened and ready!"]);
@@ -54,12 +50,13 @@ namespace RevitAddin
             }
 
             // Example 2: retrieve elements from database
-            var walls
-                = new FilteredElementCollector(doc)
+            using var filter = new FilteredElementCollector(doc);
+            var walls = filter
                     .WhereElementIsNotElementType()
                     .OfCategory(BuiltInCategory.INVALID)
-                    .OfClass(typeof(Wall));
-            if (null != walls)
+                    .OfClass(typeof(Wall))
+                    .ToArray();
+            if (walls != null)
             {
                 foreach (var wall in walls)
                 {
@@ -70,15 +67,19 @@ namespace RevitAddin
             // Example 3: Modify document within a transaction
             using (var transaction = new Transaction(doc, "Transaction name goes here, change it"))
             {
-                if (TransactionStatus.Started != transaction.Start())
-                    return Result.Failed; // TODO do something if transaction didn't start
+                if (transaction.Start() != TransactionStatus.Started)
+                {
+                    return Result.Failed; // or do something else, if transaction didn't start
+                }
 
                 using (var subTransaction = new SubTransaction(doc))
                 {
                     subTransaction.Start();
-                    // TODO: add you code here
+
+                    // add you code here
                     subTransaction.Commit();
                 }
+
                 transaction.Commit();
             }
 

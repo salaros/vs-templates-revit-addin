@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Localization: test string with spaces" xml:space="preserve">
-    <value>Localization: test string with spaces -&gt;work!</value>
+    <value>Localization: test string with spaces -&gt;It works! (look at Properties-&gt;Resources.resx)</value>
   </data>
 </root>

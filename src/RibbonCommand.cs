@@ -1,13 +1,13 @@
-﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace RevitAddin
 {
     /// <summary>
-    /// A sample ribbon command, demonstrates the possibility to bind Revit commands to ribbon buttons
+    /// A sample ribbon command, demonstrates the possibility to bind Revit commands to ribbon buttons.
     /// </summary>
-    /// <seealso cref="T:Autodesk.Revit.UI.IExternalCommand" />
+    /// <seealso cref="IExternalCommand" />
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     public class RibbonCommand : IExternalCommand
@@ -23,8 +23,8 @@ namespace RevitAddin
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
-            ElementSet elements
-        ){
+            ElementSet elements)
+        {
             TaskDialog.Show("It's alive!", StringLocalizer.CallingAssembly["Localization: test string with spaces"]);
             return Result.Succeeded;
         }
