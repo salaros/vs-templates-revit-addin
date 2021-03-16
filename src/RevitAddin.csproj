@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop" ToolsVersion="Current">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop" ToolsVersion="Current">
 
   <PropertyGroup>
     <Configurations>Debug;Release;Debug One</Configurations>
@@ -122,13 +122,6 @@
   <ItemGroup Condition="'$(UseWindowsForms)' == 'true'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-
-  <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
-    <ItemGroup>
-      <!-- A temporary fix for Revit SDK files being copied to the output folder -->
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Autodesk.Revit.SDK'" />
-    </ItemGroup>
-  </Target>
 
   <ItemGroup>
     <!-- Add-in manifest is processed via MSBuild -->
