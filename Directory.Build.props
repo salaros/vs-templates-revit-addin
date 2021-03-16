@@ -1,0 +1,5 @@
+<Project>
+
+  <Import Project="$(SolutionDir)\CodeAnalyzers.targets" Condition="Exists('$(SolutionDir)\CodeAnalyzers.targets')" />
+
+</Project>

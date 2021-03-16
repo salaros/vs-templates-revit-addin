@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -22,12 +23,12 @@ namespace RevitAddin
         /// <param name="items">The items.</param>
         /// <param name="ribbonPanelName">Name of the ribbon panel.</param>
         /// <param name="ribbonTabName">Name of the ribbon tab.</param>
+        [SuppressMessage("Design", "CC0003:Your catch should include an Exception", Justification = "Catch all exception types.")]
         public static void AddButtons(
             UIControlledApplication uiApp,
             IEnumerable<RibbonButton> items,
             string ribbonPanelName = "",
-            string ribbonTabName = ""
-        )
+            string ribbonTabName = "")
         {
             ribbonPanelName = string.IsNullOrWhiteSpace(ribbonPanelName)
                 ? nameof(RevitAddin)
@@ -38,9 +39,9 @@ namespace RevitAddin
             {
                 uiApp.CreateRibbonTab(ribbonTabName);
             }
-            finally
+            catch
             {
-
+                TaskDialog.Show("Error", $"Failed to create the following '{ribbonTabName}' ribbon.");
             }
 
             try
@@ -79,7 +80,7 @@ namespace RevitAddin
         /// <typeparam name="T"></typeparam>
         /// <seealso cref="RibbonButton" />
         /// <inheritdoc />
-        /// <seealso cref="T:Equipple.Revit.FamilyBrowser.Ribbon.RibbonHelper.RibbonButton" />
+        /// <seealso cref="Equipple.Revit.FamilyBrowser.Ribbon.RibbonHelper.RibbonButton" />
         public class RibbonButton<T> : RibbonButton
             where T : class, IExternalCommand
         {
@@ -101,6 +102,7 @@ namespace RevitAddin
             /// <inheritdoc />
             public override Bitmap Icon => string.IsNullOrWhiteSpace(IconName)
                 ? null
+
                 // ReSharper disable once AssignNullToNotNullAttribute
                 : new Bitmap(commandAssemly.GetManifestResourceStream($"{rootNameSpace}.{IconName}"));
 
@@ -113,6 +115,7 @@ namespace RevitAddin
             /// <inheritdoc />
             public override Bitmap TooltipIcon => string.IsNullOrWhiteSpace(TooltipName)
                 ? null
+
                 // ReSharper disable once AssignNullToNotNullAttribute
                 : new Bitmap(commandAssemly.GetManifestResourceStream($"{rootNameSpace}.{TooltipName}"));
 
@@ -130,18 +133,9 @@ namespace RevitAddin
         /// Ribbon button item abstract helper
         /// </summary>
         /// <seealso cref="RibbonButton" />
-        /// <seealso cref="RibbonButton" />
         public abstract class RibbonButton
         {
-            private static readonly Regex commandNonWordChars;
-
-            /// <summary>
-            /// Initializes the <see cref="RibbonButton"/> class.
-            /// </summary>
-            static RibbonButton()
-            {
-                commandNonWordChars = new Regex(@"\W", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            }
+            private static readonly Regex CommandNonWordChars = new Regex(@"\W", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
             /// <summary>
             /// Gets the text.
@@ -224,19 +218,17 @@ namespace RevitAddin
             /// </returns>
             public static implicit operator PushButtonData(RibbonButton item)
             {
-                return new PushButtonData
-                (
-                    $"cmd{commandNonWordChars.Replace(item.Text, string.Empty)}",
+                return new PushButtonData(
+                    $"cmd{CommandNonWordChars.Replace(item.Text, string.Empty)}",
                     item.Text,
                     item.AssemblyPath,
-                    item.Command.FullName
-                )
+                    item.Command.FullName)
                 {
                     LongDescription = item.Tooltip,
                     ToolTip = item.Tooltip,
-                    Image = (null == item.Icon) ? null : ConvertFromImage(new Bitmap(item.Icon, 16, 16)),
-                    LargeImage = (null == item.Icon) ? null : ConvertFromImage(new Bitmap(item.Icon, 32, 32)),
-                    ToolTipImage = (null == item.TooltipIcon) ? null : ConvertFromImage(new Bitmap(item.TooltipIcon, 192, 192)),
+                    Image = (item.Icon is null) ? null : ConvertFromImage(new Bitmap(item.Icon, 16, 16)),
+                    LargeImage = (item.Icon is null) ? null : ConvertFromImage(new Bitmap(item.Icon, 32, 32)),
+                    ToolTipImage = (item.TooltipIcon is null) ? null : ConvertFromImage(new Bitmap(item.TooltipIcon, 192, 192)),
                     AvailabilityClassName = item.AvailabilityClassName,
                 };
             }

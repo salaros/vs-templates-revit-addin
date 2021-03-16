@@ -30,18 +30,19 @@ namespace RevitAddin
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
-            ElementSet elements
-        )
+            ElementSet elements)
         {
             var uiapp = commandData?.Application;
             var uidoc = uiapp?.ActiveUIDocument;
             var app = uiapp?.Application;
             var doc = uidoc?.Document;
 
-            if (null == app || null == doc)
+            if (app is null || doc is null)
             {
                 // TODO it's just an example, an external command can open a document if needed
-                MessageBox.Show(StringLocalizer.CallingAssembly["This command can be called only when a document is opened and ready!"]);
+                TaskDialog.Show(
+                    "Localization test",
+                    StringLocalizer.CallingAssembly["This command can be called only when a document is opened and ready!"]);
                 return Result.Cancelled;
             }
 
@@ -59,7 +60,7 @@ namespace RevitAddin
                     .WhereElementIsNotElementType()
                     .OfCategory(BuiltInCategory.INVALID)
                     .OfClass(typeof(Wall));
-            if (null != walls)
+            if (walls != null)
             {
                 foreach (var wall in walls)
                 {
@@ -70,12 +71,13 @@ namespace RevitAddin
             // Example 3: Modify document within a transaction
             using (var transaction = new Transaction(doc, "Transaction name goes here, change it"))
             {
-                if (TransactionStatus.Started != transaction.Start())
+                if (transaction.Start() != TransactionStatus.Started)
                     return Result.Failed; // TODO do something if transaction didn't start
 
                 using (var subTransaction = new SubTransaction(doc))
                 {
                     subTransaction.Start();
+
                     // TODO: add you code here
                     subTransaction.Commit();
                 }
