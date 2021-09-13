@@ -1,6 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop" ToolsVersion="Current">
 
   <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+
+    <IsPackable>false</IsPackable>
+    <ResolveNuGetPackages>true</ResolveNuGetPackages>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
     <Configurations>Debug;Release;Debug One</Configurations>
 
     <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
@@ -11,6 +17,7 @@
   <PropertyGroup>
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -42,35 +49,30 @@
     <TargetFrameworks>net48</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' And '$(RevitVersion)' == ''">
     <RevitVersion>2014</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' And '$(RevitVersion)' == ''">
     <RevitVersion>2015</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' And '$(RevitVersion)' == ''">
     <RevitVersion>2016</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' And '$(RevitVersion)' == ''">
     <RevitVersion>2017</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' And '$(RevitVersion)' == ''">
     <RevitVersion>2018</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' And '$(RevitVersion)' == ''">
     <RevitVersion>2019</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' And '$(RevitVersion)' == ''">
     <RevitVersion>2020</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' And '$(RevitVersion)' == ''">
     <RevitVersion>2021</RevitVersion>
   </PropertyGroup>
-  <!--
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <RevitVersion>2022</RevitVersion>
-  </PropertyGroup>
-  -->
 
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
@@ -111,16 +113,6 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2021.*" Condition=" '$(RevitVersion)' == '2021' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2022.*" Condition=" '$(RevitVersion)' == '2022' " PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(UseWPF)' == 'true'">
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(UseWindowsForms)' == 'true'">
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <ItemGroup>
@@ -213,18 +205,8 @@
       <AddinFileBak>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(AddinFiles.FileName)%(AddinFiles.Extension).bak</AddinFileBak>
       <AddinFileDisabled>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(AddinFiles.FileName)%(AddinFiles.Extension).disabled</AddinFileDisabled>
     </PropertyGroup>
-    <Message
-      Condition="!Exists('$(AddinFileBak)') And !Exists('$(AddinFileDisabled)')"
-      Importance="high"
-      Text="Copying addin file into Revit Addin folder ($(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\)" />
-    <Copy
-      Condition="!Exists('$(AddinFileBak)') And !Exists('$(AddinFileDisabled)')"
-      SourceFiles="@(AddinFiles)"
-      DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\"
-      SkipUnchangedFiles="true"
-      OverwriteReadOnlyFiles="true"
-      Retries="3"
-      RetryDelayMilliseconds="300" />
+    <Message Condition="!Exists('$(AddinFileBak)') And !Exists('$(AddinFileDisabled)')" Importance="high" Text="Copying addin file into Revit Addin folder ($(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\)" />
+    <Copy Condition="!Exists('$(AddinFileBak)') And !Exists('$(AddinFileDisabled)')" SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" ContinueOnError="true" RetryDelayMilliseconds="300" />
   </Target>
 
   <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean" Condition="'$(RevitVersion)' != ''">
@@ -234,6 +216,11 @@
       <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).addin" />
     </ItemGroup>
     <Delete Files="@(AddinFiles)" />
+  </Target>
+
+  <Target Name="Revit2022Build" BeforeTargets="DispatchToInnerBuilds">
+    <Message Importance="high" Text="Run a parallel MSBuild task just for Revit 2022" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="Configuration=$(Configuration);TargetFramework=net48;RevitVersion=2022"></MSBuild>
   </Target>
 
 </Project>

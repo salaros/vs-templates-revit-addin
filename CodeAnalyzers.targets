@@ -26,8 +26,10 @@
 
   <!-- Analyzers-related configuration -->
   <PropertyGroup>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <AnalysisLevel>preview</AnalysisLevel>
     <StyleCopTreatErrorsAsWarnings>true</StyleCopTreatErrorsAsWarnings>
     <CodeAnalysisRuleSet Condition="Exists('$(SolutionDir)\stylecop.ruleset')">$(SolutionDir)\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

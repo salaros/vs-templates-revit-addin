@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>Revit 2014-2021 C# Addin</Name>
-    <Description>Class library template for a Revit 2014-2021 C# .NET add-in project</Description>
+    <Name>Revit 2014-2022 C# Addin</Name>
+    <Description>Class library template for a Revit 2014-2022 C# .NET add-in project</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
@@ -18,7 +18,6 @@
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="Resources.resx">Resources.resx</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="Resources.ru-RU.resx">Resources.ru-RU.resx</ProjectItem>
       </Folder>
       <Folder Name=".vs" TargetFolderName=".vs" />
       <Folder Name="Resources" TargetFolderName="Resources">
