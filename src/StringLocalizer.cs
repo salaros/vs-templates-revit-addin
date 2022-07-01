@@ -56,7 +56,6 @@ namespace RevitAddin
 
         public static StringLocalizer ExecutingAssembly { get; }
 
-
         /// <summary>
         /// Gets the <see cref="string"/> with the specified string.
         /// </summary>

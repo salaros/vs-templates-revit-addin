@@ -1,5 +1,3 @@
-#region Namespaces
-
 using System.Diagnostics;
 using System.Windows;
 using Autodesk.Revit.Attributes;
@@ -7,13 +5,11 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 
-#endregion
-
 namespace RevitAddin
 {
     /// <summary>
     /// A simple example of an external command, usually it's used for batch processing
-    /// files loaded when Revit is idling
+    /// files loaded when Revit is idling.
     /// </summary>
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
@@ -81,6 +77,7 @@ namespace RevitAddin
                     // TODO: add you code here
                     subTransaction.Commit();
                 }
+
                 transaction.Commit();
             }
 

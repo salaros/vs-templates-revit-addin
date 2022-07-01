@@ -1,5 +1,3 @@
-#region Namespaces
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,8 +12,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 #endif
-
-#endregion
 
 namespace RevitAddin
 {
@@ -59,10 +55,6 @@ namespace RevitAddin
                                                         .FirstOrDefault(c => language.Contains(c.EnglishName)) ?? Thread.CurrentThread.CurrentUICulture;
 #endif
 
-#if REVIT2023
-            ParameterType.Angle.ToString();
-#endif
-
             InitializeRibbon();
 
             try
@@ -73,22 +65,22 @@ namespace RevitAddin
 
                 // Open / change
                 application.ControlledApplication.DocumentOpened += OnDocumentOpened;
-                application.ControlledApplication.DocumentChanged += OnDocumentChanged;
+                //application.ControlledApplication.DocumentChanged += OnDocumentChanged;
 
                 // Save / SaveAs
-                application.ControlledApplication.DocumentSaved += OnDocumentSaved;
-                application.ControlledApplication.DocumentSavedAs += OnDocumentSavedAs;
+                //application.ControlledApplication.DocumentSaved += OnDocumentSaved;
+                //application.ControlledApplication.DocumentSavedAs += OnDocumentSavedAs;
 
                 // Progress & Failure
-                application.ControlledApplication.ProgressChanged += OnProgressChanged;
-                application.ControlledApplication.FailuresProcessing += OnFailuresProcessing;
+                //application.ControlledApplication.ProgressChanged += OnProgressChanged;
+                //application.ControlledApplication.FailuresProcessing += OnFailuresProcessing;
 
-                // Closing
-                application.ControlledApplication.DocumentClosing += OnDocumentClosing;
-                application.ControlledApplication.DocumentClosed += OnDocumentClosed;
+                // Document closing
+                //application.ControlledApplication.DocumentClosing += OnDocumentClosing;
+                //application.ControlledApplication.DocumentClosed += OnDocumentClosed;
 
-                // Views
-                application.ViewActivated += OnViewActivated;
+                // View activation
+                //application.ViewActivated += OnViewActivated;
 
                 // TODO: add you code here
             }
@@ -116,22 +108,22 @@ namespace RevitAddin
 
                 // Open / change
                 uiControlledApplication.ControlledApplication.DocumentOpened -= OnDocumentOpened;
-                uiControlledApplication.ControlledApplication.DocumentChanged -= OnDocumentChanged;
+                //uiControlledApplication.ControlledApplication.DocumentChanged -= OnDocumentChanged;
 
                 // Save / SaveAs
-                uiControlledApplication.ControlledApplication.DocumentSaved -= OnDocumentSaved;
-                uiControlledApplication.ControlledApplication.DocumentSavedAs -= OnDocumentSavedAs;
+                //uiControlledApplication.ControlledApplication.DocumentSaved -= OnDocumentSaved;
+                //uiControlledApplication.ControlledApplication.DocumentSavedAs -= OnDocumentSavedAs;
 
                 // Progress & Failure
-                uiControlledApplication.ControlledApplication.ProgressChanged -= OnProgressChanged;
-                uiControlledApplication.ControlledApplication.FailuresProcessing -= OnFailuresProcessing;
+                //uiControlledApplication.ControlledApplication.ProgressChanged -= OnProgressChanged;
+                //uiControlledApplication.ControlledApplication.FailuresProcessing -= OnFailuresProcessing;
 
-                // Closing
-                uiControlledApplication.ControlledApplication.DocumentClosing -= OnDocumentClosing;
-                uiControlledApplication.ControlledApplication.DocumentClosed -= OnDocumentClosed;
+                // Document closing
+                //uiControlledApplication.ControlledApplication.DocumentClosing -= OnDocumentClosing;
+                //uiControlledApplication.ControlledApplication.DocumentClosed -= OnDocumentClosed;
 
-                // Views
-                uiControlledApplication.ViewActivated -= OnViewActivated;
+                // View activation
+                //uiControlledApplication.ViewActivated -= OnViewActivated;
 
                 // TODO: add you code here
             }
