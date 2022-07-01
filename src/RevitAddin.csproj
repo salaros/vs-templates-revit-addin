@@ -1,23 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop" ToolsVersion="Current">
 
   <PropertyGroup>
-    <LangVersion>preview</LangVersion>
-
-    <IsPackable>false</IsPackable>
-    <ResolveNuGetPackages>true</ResolveNuGetPackages>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-
-    <Configurations>Debug;Release;Debug One</Configurations>
-
-    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
-    <PlatformTarget>x64</PlatformTarget>
-    <Platforms>x64</Platforms>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
-    <NeutralLanguage>en</NeutralLanguage>
+    <LangVersion>latest</LangVersion>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -32,21 +17,31 @@
               2019  |  net47
               2020  |  net471
               2021  |  net48
-              2022  |  net48 ?
+              2022  |  net48
+              2023  |  net48
       For example you can exclude Revit 2014, by simply removing net40 target belows
       -->
     <TargetFrameworks>net48;net471;net47;net46;net452;net451;net45;net40</TargetFrameworks>
-    <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug One'">
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <!-- You could debug just ONE addin version,
          instead of building all the versions above.
          Just put ONE target from the list above
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net48</TargetFrameworks>
+    <TargetFrameworks>net482</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.Contains('net481')) Or $(TargetFramework.Contains('net482'))">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkMoniker>.NETFrameWork,Version=v4.8</TargetFrameworkMoniker>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.Contains('net481')) Or $(TargetFramework.Contains('net482'))">
+    <AssetTargetFallbackn>net48</AssetTargetFallbackn>
+    <DisableImplicitFrameworkReferences>false</DisableImplicitFrameworkReferences>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' And '$(RevitVersion)' == ''">
@@ -73,6 +68,39 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' And '$(RevitVersion)' == ''">
     <RevitVersion>2021</RevitVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net481'">
+    <RevitVersion>2022</RevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net482'">
+    <RevitVersion>2023</RevitVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <Platform>x64</Platform>
+    <!-- RuntimeIdentifier>win-x64</RuntimeIdentifier -->
+
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <NeutralLanguage>en</NeutralLanguage>
+
+</PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <ResolveNuGetPackages>true</ResolveNuGetPackages>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
 
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
@@ -94,13 +122,14 @@
 
     <!-- Override 'OutputPath' to Debug/Release + Revit version -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\bin\$(Configuration)\$(RevitVersion)</OutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\$(RevitVersion)</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
     <DebugType>full</DebugType>
-    <OutputPath>..\bin\Debug\$(RevitVersion)</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\Debug\$(RevitVersion)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -113,6 +142,7 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2021.*" Condition=" '$(RevitVersion)' == '2021' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2022.*" Condition=" '$(RevitVersion)' == '2022' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2023.*" Condition=" '$(RevitVersion)' == '2023' " PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -218,9 +248,12 @@
     <Delete Files="@(AddinFiles)" />
   </Target>
 
-  <Target Name="Revit2022Build" BeforeTargets="DispatchToInnerBuilds">
-    <Message Importance="high" Text="Run a parallel MSBuild task just for Revit 2022" />
+  <Target Name="Revit2022Build" BeforeTargets="DispatchToInnerBuilds" Condition="!$(Configuration.Contains('Debug'))">
+    <!-- By commenting this out you will disable Revit 2022 and 2023 support -->
+    <Message Importance="high" Text="Run a parallel MSBuild for Revit 2022 and 2023" />
     <MSBuild Projects="$(MSBuildProjectFile)" Properties="Configuration=$(Configuration);TargetFramework=net48;RevitVersion=2022"></MSBuild>
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="Configuration=$(Configuration);TargetFramework=net48;RevitVersion=2023"></MSBuild>
+    <!-- /////////////////////////////////////////////////////////////////// -->
   </Target>
 
 </Project>

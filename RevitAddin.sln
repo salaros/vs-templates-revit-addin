@@ -1,14 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F33163D-0074-4DF6-B12F-3A587CEC4781}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		src\__TemplateIcon.ico = src\__TemplateIcon.ico
 		appveyor.yml = appveyor.yml
 		build.ps1 = build.ps1
 		CodeAnalyzers.targets = CodeAnalyzers.targets
@@ -20,19 +19,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\RevitAddin.vstemplate = src\RevitAddin.vstemplate
 		stylecop.json = stylecop.json
 		stylecop.ruleset = stylecop.ruleset
+		src\__TemplateIcon.ico = src\__TemplateIcon.ico
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevitAddin", "src\RevitAddin.csproj", "{286410B8-6185-4DFE-AEEC-8680398938CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug One|x64 = Debug One|x64
 		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{286410B8-6185-4DFE-AEEC-8680398938CA}.Debug One|x64.ActiveCfg = Debug One|x64
-		{286410B8-6185-4DFE-AEEC-8680398938CA}.Debug One|x64.Build.0 = Debug One|x64
 		{286410B8-6185-4DFE-AEEC-8680398938CA}.Debug|x64.ActiveCfg = Debug|x64
 		{286410B8-6185-4DFE-AEEC-8680398938CA}.Debug|x64.Build.0 = Debug|x64
 		{286410B8-6185-4DFE-AEEC-8680398938CA}.Release|x64.ActiveCfg = Release|x64

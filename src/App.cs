@@ -59,6 +59,10 @@ namespace RevitAddin
                                                         .FirstOrDefault(c => language.Contains(c.EnglishName)) ?? Thread.CurrentThread.CurrentUICulture;
 #endif
 
+#if REVIT2023
+            ParameterType.Angle.ToString();
+#endif
+
             InitializeRibbon();
 
             try

@@ -1,5 +1,11 @@
 {
   "profiles": {
+    "Revit 2023": {
+      "commandName": "Executable",
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2023\\Revit.exe",
+      "commandLineArgs": "",
+      "use64Bit": true
+    },
     "Revit 2022": {
       "commandName": "Executable",
       "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2022\\Revit.exe",
